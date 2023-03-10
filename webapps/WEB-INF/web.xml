@@ -5,7 +5,7 @@
 <web-app>
     <display-name>ServletApp</display-name>
     <description>New ServletApp</description>
-<!--    SERVLET NAME    -->
+    <!--    SERVLET NAME    -->
     <servlet>
         <servlet-name>Home</servlet-name>
         <servlet-class>Controllers.Home</servlet-class>
@@ -21,6 +21,14 @@
     <servlet>
         <servlet-name>Cart</servlet-name>
         <servlet-class>Controllers.Cart</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Profile</servlet-name>
+        <servlet-class>Controllers.Profile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Orders</servlet-name>
+        <servlet-class>Controllers.Orders</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AdminDashboard</servlet-name>
@@ -42,7 +50,7 @@
         <servlet-name>Logout</servlet-name>
         <servlet-class>Controllers.Logout</servlet-class>
     </servlet>
-<!--    FILTERS     -->
+    <!--    FILTERS     -->
     <filter>
         <filter-name>AuthFilter</filter-name>
         <filter-class>Filter.AuthFilter</filter-class>
@@ -60,7 +68,7 @@
         <servlet-name>AdminDashboard</servlet-name>
     </filter-mapping>
 
-<!--    SERVLET MAPPING     -->
+    <!--    SERVLET MAPPING     -->
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
         <url-pattern>/</url-pattern>
@@ -80,6 +88,14 @@
     <servlet-mapping>
         <servlet-name>Cart</servlet-name>
         <url-pattern>/Cart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Profile</servlet-name>
+        <url-pattern>/Profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Orders</servlet-name>
+        <url-pattern>/Orders</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AdminDashboard</servlet-name>

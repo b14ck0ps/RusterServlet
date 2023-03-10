@@ -47,7 +47,10 @@
                     </div>
                     <input type="hidden" name="id" value="<%= request.getAttribute("id") %>">
                     <div class="d-flex justify-content-between">
-                        <button type="submit" class="btn btn-primary">Update Product</button>
+                        <div>
+                            <button type="submit" class="btn btn-primary">Update Product</button>
+                            <a href="/Admin" class="btn btn-secondary">Cancel</a>
+                        </div>
                         <a href="/Admin?delete=${requestScope.id}" class="btn btn-danger ml-auto">Delete</a>
                     </div>
                 </form>

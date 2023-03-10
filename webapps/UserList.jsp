@@ -1,7 +1,8 @@
-<%@ page import="java.sql.ResultSet" %>
-<%@ page import="DBservices.DatabaseOperations" %>
 <%@include file="Header.jsp" %>
 <%@include file="AdminNavBar.jsp" %>
+<%@ page isELIgnored="false" %>
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="DBservices.DatabaseOperations" %>
 <main>
     <div class="container">
         <div class="row">

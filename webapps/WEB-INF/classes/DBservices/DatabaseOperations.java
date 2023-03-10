@@ -171,4 +171,20 @@ public class DatabaseOperations {
             return userType;
         }
     }
+    //get user by username
+    public static User getUserByUsername(String username) {
+        User user = null;
+        try {
+            Connection con = getConnection();
+            var ps = con.prepareStatement("SELECT * FROM Users WHERE username = ?");
+            ps.setString(1, username);
+            var rs = ps.executeQuery();
+            if (rs.next()) {
+                user = new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"), rs.getString("email"), UserType.valueOf(rs.getString("userType")));
+            }
+            return user;
+        } catch (Exception e) {
+            return user;
+        }
+    }
 }
