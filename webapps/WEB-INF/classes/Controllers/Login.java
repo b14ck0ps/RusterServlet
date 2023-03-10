@@ -31,7 +31,7 @@ public class Login extends HttpServlet {
             req.setAttribute("invalid", "Username or password is incorrect");
             req.getRequestDispatcher("Login.jsp").forward(req, resp);
         } else {
-            req.getSession().setAttribute("user", user);
+            req.getSession().setAttribute("user", username);
             resp.sendRedirect("Home");
         }
         

@@ -5,6 +5,7 @@
 <web-app>
     <display-name>ServletApp</display-name>
     <description>New ServletApp</description>
+<!--    SERVLET NAME    -->
     <servlet>
         <servlet-name>Home</servlet-name>
         <servlet-class>Controllers.Home</servlet-class>
@@ -37,6 +38,17 @@
         <servlet-name>ProductDetails</servlet-name>
         <servlet-class>Controllers.ProductDetails</servlet-class>
     </servlet>
+<!--    FILTERS     -->
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>Filter.AuthFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <servlet-name>Home</servlet-name>
+    </filter-mapping>
+
 <!--    SERVLET MAPPING     -->
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
