@@ -34,7 +34,7 @@ public class Login extends HttpServlet {
         } else {
             req.getSession().setAttribute("user", username);
             var userType = DBservices.DatabaseOperations.getUserTypeByUsername(username);
-            req.getSession().setAttribute("userType", userType);
+            req.getSession().setAttribute("userType", userType.toString());
             if (userType == UserType.ADMIN) {
                 resp.sendRedirect("Admin");
             } else {
