@@ -51,5 +51,22 @@ public class DatabaseOperations {
         }
     }
 
+    public static int LoginUser(String username, String password) {
+        int status = 0;
+        try {
+            Connection con = getConnection();
+            var ps = con.prepareStatement("SELECT * FROM Users WHERE username = ? AND password = ?");
+            ps.setString(1, username);
+            ps.setString(2, password);
+            var rs = ps.executeQuery();
+            if (rs.next()) {
+                status = 1;
+            }
+            return status;
+        } catch (Exception e) {
+            return status;
+        }
+    }
+
 
 }
