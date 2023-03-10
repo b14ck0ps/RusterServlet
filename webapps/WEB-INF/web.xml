@@ -38,6 +38,10 @@
         <servlet-name>ProductDetails</servlet-name>
         <servlet-class>Controllers.ProductDetails</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>Controllers.Logout</servlet-class>
+    </servlet>
 <!--    FILTERS     -->
     <filter>
         <filter-name>AuthFilter</filter-name>
@@ -60,6 +64,10 @@
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/Logout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Cart</servlet-name>
