@@ -2,6 +2,7 @@ package DBservices;
 
 import Models.Product;
 import Models.User;
+import Models.UserType;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -135,7 +136,7 @@ public class DatabaseOperations {
     }
 
     //update product
-    public static int updateProduct(int id,Product p) {
+    public static int updateProduct(int id, Product p) {
         int status = 0;
         try {
             Connection con = getConnection();
@@ -154,4 +155,20 @@ public class DatabaseOperations {
         }
     }
 
+    //get user type by username
+    public static UserType getUserTypeByUsername(String username) {
+        UserType userType = null;
+        try {
+            Connection con = getConnection();
+            var ps = con.prepareStatement("SELECT userType FROM Users WHERE username = ?");
+            ps.setString(1, username);
+            var rs = ps.executeQuery();
+            if (rs.next()) {
+                userType = UserType.valueOf(rs.getString("userType"));
+            }
+            return userType;
+        } catch (Exception e) {
+            return userType;
+        }
+    }
 }

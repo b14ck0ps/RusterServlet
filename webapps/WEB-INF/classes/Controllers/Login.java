@@ -1,5 +1,6 @@
 package Controllers;
 
+import Models.UserType;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,8 +33,13 @@ public class Login extends HttpServlet {
             req.getRequestDispatcher("Login.jsp").forward(req, resp);
         } else {
             req.getSession().setAttribute("user", username);
-            resp.sendRedirect("Home");
+            var userType = DBservices.DatabaseOperations.getUserTypeByUsername(username);
+            req.getSession().setAttribute("userType", userType);
+            if (userType == UserType.ADMIN) {
+                resp.sendRedirect("Admin");
+            } else {
+                resp.sendRedirect("Home");
+            }
         }
-        
     }
 }
