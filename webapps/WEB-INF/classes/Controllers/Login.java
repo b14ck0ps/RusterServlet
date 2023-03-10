@@ -7,12 +7,12 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-public class Home extends HttpServlet {
+public class Login extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        req.getRequestDispatcher("Home.jsp").forward(req, resp);
+        req.getRequestDispatcher("Login.jsp").forward(req, resp);
     }
 
     @Override
