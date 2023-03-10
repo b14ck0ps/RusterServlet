@@ -1,4 +1,5 @@
-<%@include  file="Header.html" %>
+<%@include  file="Header.jsp" %>
+<%@include  file="CutomerNavBar.jsp" %>
 <%@ page import="jakarta.servlet.http.HttpServletRequest" %>
 <%@ page isELIgnored="false" %>
 <main>
@@ -25,4 +26,4 @@
         </div>
     </div>
 </main>
-<%@include  file="Footer.html" %>
+<%@include  file="Footer.jsp" %>

@@ -1,4 +1,5 @@
-<%@include  file="Header.html" %>
+<%@include  file="Header.jsp" %>
+<%@include  file="CutomerNavBar.jsp" %>
 <main>
     <div class="container">
         <div class="row">
@@ -11,4 +12,4 @@
         </div>
     </div>
 </main>
-<%@include  file="Footer.html" %>
+<%@include  file="Footer.jsp" %>
