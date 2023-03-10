@@ -12,7 +12,7 @@
                     <h1>Products Details</h1>
                     <%
                         Product product = (Product) request.getAttribute("product");
-                        out.println("<img class='w-25' src=" + product.getImage() + " alt='+product.getName()+'>");
+                        out.println("<img class='w-25' src=" + product.getImage() + " alt="+product.getName()+">");
                     %>
                     <form action="/ProductDetails" method="post">
                         <div class="mb-3">
