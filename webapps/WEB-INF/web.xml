@@ -33,6 +33,11 @@
         <servlet-name>AddProduct</servlet-name>
         <servlet-class>Controllers.AddProduct</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ProductDetails</servlet-name>
+        <servlet-class>Controllers.ProductDetails</servlet-class>
+    </servlet>
+<!--    SERVLET MAPPING     -->
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
         <url-pattern>/</url-pattern>
@@ -60,5 +65,9 @@
     <servlet-mapping>
         <servlet-name>UserList</servlet-name>
         <url-pattern>/UserList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductDetails</servlet-name>
+        <url-pattern>/ProductDetails</url-pattern>
     </servlet-mapping>
 </web-app>
