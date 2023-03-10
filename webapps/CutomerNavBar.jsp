@@ -9,17 +9,16 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav ms-auto">
             <a class="nav-item nav-link active" href="/">Home</a>
-            <a class="nav-item nav-link active" href="/Profile">Profile</a>
-            <a class="nav-item nav-link active" href="/Orders">Orders</a>
             <c:if test="${empty sessionScope.user}">
                 <a class="nav-item nav-link" href="/Login">Login</a>
                 <a class="nav-item nav-link" href="/Registration">Registration</a>
             </c:if>
             <c:if test="${not empty sessionScope.user}">
+                <a class="nav-item nav-link active" href="/Profile">Profile</a>
+                <a class="nav-item nav-link active" href="/Orders">Orders</a>
                 <a class="nav-item nav-link active" href="/Cart">Cart</a>
                 <a class="nav-item nav-link ms-5 text-danger" href="/Logout">Logout</a>
             </c:if>
         </div>
     </div>
-
 </nav>
