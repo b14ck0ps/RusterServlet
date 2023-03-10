@@ -39,10 +39,11 @@ public class DatabaseOperations {
         int status = 0;
         try {
             Connection con = getConnection();
-            var ps = con.prepareStatement("INSERT INTO Users (username, password, email) values(?,?,?)");
+            var ps = con.prepareStatement("INSERT INTO Users (username, password, email, userType) values(?,?,?,?)");
             ps.setString(1, p.getUsername());
             ps.setString(2, p.getPassword());
             ps.setString(3, p.getEmail());
+            ps.setString(4, p.getUserType().toString());
             ps.executeUpdate();
             status = 1;
             return status;

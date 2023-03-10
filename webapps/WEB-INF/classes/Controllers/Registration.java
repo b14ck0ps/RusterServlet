@@ -1,5 +1,6 @@
 package Controllers;
 
+import Models.UserType;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ public class Registration extends HttpServlet {
         var username = req.getParameter("username");
         var password = req.getParameter("password");
         var email = req.getParameter("email");
+        var userType = req.getParameter("UserType");
 
         //validate the data individually
         if (username == null || username.isEmpty()) {
@@ -41,8 +43,14 @@ public class Registration extends HttpServlet {
             req.getRequestDispatcher("Registration.jsp").forward(req, resp);
             return;
         }
+        UserType Type;
+        if (userType.equals("admin")) {
+            Type = UserType.ADMIN;
+        } else {
+            Type = UserType.CUSTOMER;
+        }
 
-        var user = new Models.User(username, password, email);
+        var user = new Models.User(username, password, email, Type);
         DBservices.DatabaseOperations.RegisterUser(user);
         if (DBservices.DatabaseOperations.RegisterUser(user) == 1) {
             req.getRequestDispatcher("Login.jsp").forward(req, resp);

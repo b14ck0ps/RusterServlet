@@ -32,7 +32,7 @@ public class Login extends HttpServlet {
             req.getRequestDispatcher("Login.jsp").forward(req, resp);
         } else {
             req.getSession().setAttribute("user", user);
-            req.getRequestDispatcher("Home.jsp").forward(req, resp);
+            resp.sendRedirect("Home");
         }
         
     }
