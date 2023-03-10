@@ -1,7 +1,9 @@
-<%@ page import="java.sql.ResultSet" %>
-<%@ page import="DBservices.DatabaseOperations" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="Header.jsp" %>
 <%@include file="AdminNavBar.jsp" %>
+<%@ page isELIgnored="false" %>
+<c:set var="products" value="${requestScope.products}" />
+
 <main>
     <div class="container">
         <div class="row">
@@ -19,20 +21,17 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <%
-                            ResultSet rs = DatabaseOperations.getAllProducts();
-                            int i = 1;
-                            while (rs.next()) {
-                                out.println("<tr>");
-                                out.println("<th scope=\"row\">" + i + "</th>");
-                                out.println("<td>" + rs.getString("ProductName") + "</td>");
-                                out.println("<td>" + rs.getString("CategoryId") + "</td>");
-                                out.println("<td>" + rs.getString("Price") + "</td>");
-                                out.println("<td> <a href='/ProductDetails?id="+rs.getInt("id")+"'> Details </a>  </td>");
-                                out.println("</tr>");
-                                i++;
-                            }
-                        %>
+                        <c:forEach var="product" items="${products}">
+                            <tr>
+                                <th scope="row"><c:out value="${product.id}"/></th>
+                                <td><c:out value="${product.name}"/></td>
+                                <td><c:out value="${product.categoryId}"/></td>
+                                <td><c:out value="${product.price}"/></td>
+                                <td>
+                                    <a href="/ProductDetails?id=<c:out value="${product.id}"/>">Details</a>
+                                </td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>

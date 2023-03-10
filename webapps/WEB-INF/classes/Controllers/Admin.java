@@ -1,11 +1,16 @@
 package Controllers;
 
+import DBservices.DatabaseOperations;
+import Models.Product;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Admin extends HttpServlet {
 
@@ -19,6 +24,23 @@ public class Admin extends HttpServlet {
             resp.sendRedirect("Admin");
             return;
         }
+        var products = DatabaseOperations.getAllProducts();
+        List<Product> productsList = new ArrayList<>();
+        while (true) {
+            try {
+                if (!products.next()) break;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            Product product;
+            try {
+                productsList.add(new Product(products.getInt("id"),products.getString("ProductName"), products.getInt("CategoryId"), products.getInt("quantity"), products.getDouble("Price"), products.getString("image")));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+        req.setAttribute("products", productsList);
         req.getRequestDispatcher("AdminDashBoard.jsp").forward(req, resp);
     }
 

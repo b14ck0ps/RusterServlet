@@ -1,8 +1,8 @@
-<%@ page import="java.sql.ResultSet" %>
-<%@ page import="DBservices.DatabaseOperations" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="Header.jsp" %>
 <%@include file="AdminNavBar.jsp" %>
 <%@ page isELIgnored="false" %>
+<c:set var="categories" value="${requestScope.categories}"/>
 <main>
     <div class="container">
         <div class="row">
@@ -21,12 +21,9 @@
                         <div class="mb-3">
                             <label for="categoryId" class="form-label">Category Id</label>
                             <select id="categoryId" class="form-select" name="categoryId">
-                                <%
-                                    ResultSet rs = DatabaseOperations.getAllCategories();
-                                    while (rs.next()) {
-                                        out.println("<option value='" + rs.getInt("id") + "'> " + rs.getString("CategoryName") + "</option>");
-                                    }
-                                %>
+                                <c:forEach var="category" items="${categories}">
+                                    <option value="${category.id}">${category.name}</option>
+                                </c:forEach>
                             </select>
                             <span class="text-danger">${requestScope.categoryIdError}</span>
                         </div>
