@@ -187,4 +187,22 @@ public class DatabaseOperations {
             return user;
         }
     }
+    //update user
+    public static int updateUser(User p) {
+        int status = 0;
+        try {
+            Connection con = getConnection();
+            var ps = con.prepareStatement("UPDATE Users SET username = ?, password = ?, email = ?, userType = ? WHERE id = ?");
+            ps.setString(1, p.getUsername());
+            ps.setString(2, p.getPassword());
+            ps.setString(3, p.getEmail());
+            ps.setString(4, p.getUserType().toString());
+            ps.setInt(5, p.getId());
+            ps.executeUpdate();
+            status = 1;
+            return status;
+        } catch (Exception e) {
+            return status;
+        }
+    }
 }

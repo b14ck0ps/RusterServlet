@@ -32,7 +32,7 @@
                         </h6>
                     </div>
                     <div class="col-md-6">
-                        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+                        <a class="btn btn-outline-primary" href="/Profile?edit">Edit Profile</a>
                     </div>
                 </div>
             </div>
@@ -120,16 +120,6 @@
 
     .profile-head h6 {
         color: #0062cc;
-    }
-
-    .profile-edit-btn {
-        border: none;
-        border-radius: 1.5rem;
-        width: 70%;
-        padding: 2%;
-        font-weight: 600;
-        color: #6c757d;
-        cursor: pointer;
     }
 
 </style>
