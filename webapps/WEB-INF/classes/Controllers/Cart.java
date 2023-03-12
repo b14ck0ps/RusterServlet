@@ -21,6 +21,15 @@ public class Cart extends HttpServlet {
         if (action != null && action.equals("add")) {
             try {
                 AddToCart(req, resp);
+                req.getSession().setAttribute("cartMessage", "Product added to cart successfully");
+                //check if param single is true
+                var single = req.getParameter("single");
+                if (single != null && single.equals("true")) {
+                    resp.sendRedirect("/Cart");
+                } else {
+                    resp.sendRedirect("/Home");
+                }
+                return;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -49,6 +58,9 @@ public class Cart extends HttpServlet {
         if (action != null && action.equals("checkout")) {
             try {
                 checkout(req, resp);
+                req.getSession().setAttribute("OrderMessage", "Order placed successfully");
+                resp.sendRedirect("/Orders");
+                return;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -92,7 +104,6 @@ public class Cart extends HttpServlet {
                         cartProducts.get(i).setPrice(ItemPrice * cartProducts.get(i).getQuantity());
                     }
                     req.getSession().setAttribute("cartProducts", cartProducts);
-                    return;
                 }
             }
             if (product.next()) {
