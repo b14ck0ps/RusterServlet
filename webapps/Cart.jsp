@@ -26,7 +26,7 @@
                                 <td>${cartProduct.quantity}</td>
                                 <td>${cartProduct.price}</td>
                                 <td>
-                                    <a href="CartController?action=delete&productId=${cartProduct.id}"
+                                    <a href="Cart?action=delete&id=${cartProduct.id}"
                                        class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>

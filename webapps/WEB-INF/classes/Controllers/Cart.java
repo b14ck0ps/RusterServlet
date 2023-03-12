@@ -23,6 +23,13 @@ public class Cart extends HttpServlet {
                 throw new RuntimeException(e);
             }
         }
+        if (action != null && action.equals("delete")) {
+            try {
+                DeleteFromCart(req, resp);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
         req.getRequestDispatcher("Cart.jsp").forward(req, resp);
     }
 
@@ -45,6 +52,23 @@ public class Cart extends HttpServlet {
                 var price = product.getDouble("Price");
                 var image = product.getString("image");
                 cartProducts.add(new CartProduct(Integer.parseInt(id), name, Integer.parseInt(quantity), Integer.parseInt(quantity) * price, image));
+            }
+            req.getSession().setAttribute("cartProducts", cartProducts);
+        }
+    }
+
+    private void DeleteFromCart(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+        var id = req.getParameter("id");
+        List<CartProduct> cartProducts = (List<CartProduct>) req.getSession().getAttribute("cartProducts");
+        if (cartProducts == null) {
+            cartProducts = new java.util.ArrayList<>();
+        }
+        if (id != null) {
+            for (var i = 0; i < cartProducts.size(); i++) {
+                if (cartProducts.get(i).getId() == Integer.parseInt(id)) {
+                    cartProducts.remove(i);
+                    break;
+                }
             }
             req.getSession().setAttribute("cartProducts", cartProducts);
         }
