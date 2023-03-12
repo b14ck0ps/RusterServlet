@@ -255,5 +255,17 @@ public class DatabaseOperations {
             return id;
         }
     }
-
+    //get all orders of a user
+    public static ResultSet getAllOrdersByUserId(int userId) {
+        ResultSet rs = null;
+        try {
+            Connection con = getConnection();
+            var ps = con.prepareStatement("SELECT * FROM Orders WHERE UserId = ?");
+            ps.setInt(1, userId);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (Exception e) {
+            return rs;
+        }
+    }
 }
