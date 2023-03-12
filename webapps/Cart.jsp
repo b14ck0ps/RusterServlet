@@ -7,6 +7,11 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card p-3 m-2">
+                    <c:if test="${sessionScope.cartProducts.size() == 0}">
+                        <h1 class="text-center">Cart is Empty</h1>
+                    </c:if>
+                    <c:if test="${sessionScope.cartProducts.size() != 0}">
+
                     <div class="d-flex justify-content-between align-items-center">
                         <h1>Cart</h1>
                         <p>Total Items: ${cartProducts.size().toString()}</p>
@@ -27,9 +32,11 @@
                                 <td><img width="50px" src="${cartProduct.image}" alt="${cartProduct.productName}"/></td>
                                 <td>${cartProduct.productName}</td>
                                 <td>
-                                    <a class="badge rounded-pill bg-danger text-decoration-none" href="/Cart?action=deleteSingle&id=${cartProduct.id}&quantity=1">-</a>
-                                        <span class="m-2">${cartProduct.quantity}</span>
-                                    <a class="badge rounded-pill bg-primary text-decoration-none" href="/Cart?action=add&id=${cartProduct.id}&quantity=1">+</a>
+                                    <a class="badge rounded-pill bg-danger text-decoration-none"
+                                       href="/Cart?action=deleteSingle&id=${cartProduct.id}&quantity=1">-</a>
+                                    <span class="m-2">${cartProduct.quantity}</span>
+                                    <a class="badge rounded-pill bg-primary text-decoration-none"
+                                       href="/Cart?action=add&id=${cartProduct.id}&quantity=1">+</a>
                                 </td>
                                 <td>${cartProduct.price}</td>
                                 <td>
@@ -51,6 +58,7 @@
                     </table>
                     <a href="/Cart?action=checkout" class="btn btn-success w-25 m-auto">Checkout</a>
                 </div>
+                </c:if>
             </div>
         </div>
     </div>
