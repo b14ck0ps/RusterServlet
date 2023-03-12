@@ -34,7 +34,7 @@
                                 <td>${cartProduct.price}</td>
                                 <td>
                                     <a href="/Cart?action=delete&id=${cartProduct.id}"
-                                       class="btn btn-danger">Delete</a>
+                                       class="btn btn-outline-danger">Delete</a>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -44,11 +44,12 @@
                             <td><strong>Total:</strong></td>
                             <td class="text-left">${sessionScope.totalPrice}</td>
                             <td>
-                                <a href="/Cart?action=checkout" class="btn btn-success">Checkout</a>
+                                <a href="/Cart?action=clear" class="btn btn-outline-danger">Clear Cart</a>
                             </td>
                         </tr>
                         </tbody>
                     </table>
+                    <a href="/Cart?action=checkout" class="btn btn-success w-25 m-auto">Checkout</a>
                 </div>
             </div>
         </div>

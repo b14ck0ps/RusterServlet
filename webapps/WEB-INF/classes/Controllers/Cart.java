@@ -37,6 +37,13 @@ public class Cart extends HttpServlet {
                 throw new RuntimeException(e);
             }
         }
+        if (action != null && action.equals("clear")) {
+            try {
+                clearCart(req, resp);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
         //calculate total price
         List<CartProduct> cartProducts = (List<CartProduct>) req.getSession().getAttribute("cartProducts");
         var totalPrice = 0.0;
@@ -124,5 +131,14 @@ public class Cart extends HttpServlet {
             }
             req.getSession().setAttribute("cartProducts", cartProducts);
         }
+    }
+
+    private void clearCart(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+        List<CartProduct> cartProducts = (List<CartProduct>) req.getSession().getAttribute("cartProducts");
+        if (cartProducts == null) {
+            cartProducts = new java.util.ArrayList<>();
+        }
+        cartProducts.clear();
+        req.getSession().setAttribute("cartProducts", cartProducts);
     }
 }
