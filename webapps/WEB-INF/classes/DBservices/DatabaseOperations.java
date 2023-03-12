@@ -1,8 +1,6 @@
 package DBservices;
 
-import Models.Product;
-import Models.User;
-import Models.UserType;
+import Models.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -171,6 +169,7 @@ public class DatabaseOperations {
             return userType;
         }
     }
+
     //get user by username
     public static User getUserByUsername(String username) {
         User user = null;
@@ -187,6 +186,7 @@ public class DatabaseOperations {
             return user;
         }
     }
+
     //update user
     public static int updateUser(User p) {
         int status = 0;
@@ -205,4 +205,55 @@ public class DatabaseOperations {
             return status;
         }
     }
+
+    //store order to database
+    public static int storeOrder(Order order) {
+        int status = 0;
+        try {
+            Connection con = getConnection();
+            var ps = con.prepareStatement("INSERT INTO Orders (UserId, TotalPrice, OrderDate) values(?,?,?)");
+            ps.setInt(1, order.getUserId());
+            ps.setDouble(2, order.getTotalPrice());
+            ps.setDate(3, order.getDate());
+            ps.executeUpdate();
+            status = 1;
+            return status;
+        } catch (Exception e) {
+            return status;
+        }
+    }
+
+    //save order OrderProduct to database
+    public static int storeOrderProduct(OrderProduct orderProduct) {
+        int status = 0;
+        try {
+            Connection con = getConnection();
+            var ps = con.prepareStatement("INSERT INTO productsorders (OrderID, ProductID, quantity) values(?,?,?)");
+            ps.setInt(1, orderProduct.getOrderId());
+            ps.setInt(2, orderProduct.getProductId());
+            ps.setInt(3, orderProduct.getQuantity());
+            ps.executeUpdate();
+            status = 1;
+            return status;
+        } catch (Exception e) {
+            return status;
+        }
+    }
+
+    //get last order id
+    public static int getLastOrderId() {
+        int id = 0;
+        try {
+            Connection con = getConnection();
+            var ps = con.prepareStatement("SELECT MAX(id) as id FROM Orders");
+            var rs = ps.executeQuery();
+            if (rs.next()) {
+                id = rs.getInt("id");
+            }
+            return id;
+        } catch (Exception e) {
+            return id;
+        }
+    }
+
 }

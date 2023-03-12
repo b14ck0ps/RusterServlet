@@ -1,6 +1,8 @@
 package Controllers;
 
 import Models.CartProduct;
+import Models.Order;
+import Models.OrderProduct;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,6 +42,13 @@ public class Cart extends HttpServlet {
         if (action != null && action.equals("clear")) {
             try {
                 clearCart(req, resp);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        if (action != null && action.equals("checkout")) {
+            try {
+                checkout(req, resp);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -145,6 +154,28 @@ public class Cart extends HttpServlet {
             cartProducts = new java.util.ArrayList<>();
         }
         cartProducts.clear();
+        req.getSession().setAttribute("cartProducts", cartProducts);
+    }
+
+    private void checkout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+        List<CartProduct> cartProducts = (List<CartProduct>) req.getSession().getAttribute("cartProducts");
+        if (cartProducts == null) {
+            cartProducts = new java.util.ArrayList<>();
+        }
+        var totalPrice = req.getSession().getAttribute("totalPrice");
+        var date = new java.sql.Date(new java.util.Date().getTime());
+        var user = DBservices.DatabaseOperations.getUserByUsername(req.getSession().getAttribute("user").toString());
+        var order = new Order(user.getId(), (Double) totalPrice, date);
+        if (DBservices.DatabaseOperations.storeOrder(order) == 1) {
+            ////get last order id from database and set it to order object to be used in orderproduct table as foreign key
+            order.setId(DBservices.DatabaseOperations.getLastOrderId());
+            //save orderproducts to database
+            for (CartProduct cartProduct : cartProducts) {
+                var orderProduct = new OrderProduct(order.getId(), cartProduct.getId(), cartProduct.getQuantity());
+                DBservices.DatabaseOperations.storeOrderProduct(orderProduct);
+            }
+            cartProducts.clear();
+        }
         req.getSession().setAttribute("cartProducts", cartProducts);
     }
 }
