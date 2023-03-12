@@ -255,6 +255,7 @@ public class DatabaseOperations {
             return id;
         }
     }
+
     //get all orders of a user
     public static ResultSet getAllOrdersByUserId(int userId) {
         ResultSet rs = null;
@@ -266,6 +267,37 @@ public class DatabaseOperations {
             return rs;
         } catch (Exception e) {
             return rs;
+        }
+    }
+
+    //getProductsByOrderId
+    public static ResultSet getProductsByOrderId(int orderId) {
+        ResultSet rs = null;
+        try {
+            Connection con = getConnection();
+            var ps = con.prepareStatement("SELECT * FROM productsorders WHERE OrderID = ?");
+            ps.setInt(1, orderId);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (Exception e) {
+            return rs;
+        }
+    }
+
+    //getOrderbyId
+    public static Order getOrderById(int orderId) {
+        Order order = null;
+        try {
+            Connection con = getConnection();
+            var ps = con.prepareStatement("SELECT * FROM Orders WHERE id = ?");
+            ps.setInt(1, orderId);
+            var rs = ps.executeQuery();
+            if (rs.next()) {
+                order = new Order(rs.getInt("id"), rs.getInt("UserId"), rs.getDouble("TotalPrice"), rs.getDate("OrderDate"));
+            }
+            return order;
+        } catch (Exception e) {
+            return order;
         }
     }
 }
