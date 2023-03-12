@@ -27,9 +27,9 @@
                                 <td><img width="50px" src="${cartProduct.image}" alt="${cartProduct.productName}"/></td>
                                 <td>${cartProduct.productName}</td>
                                 <td>
-                                    <a href="/Cart?action=deleteSingle&id=${cartProduct.id}&quantity=1">-</a>
-                                        ${cartProduct.quantity}
-                                    <a href="/Cart?action=add&id=${cartProduct.id}&quantity=1">+</a>
+                                    <a class="badge rounded-pill bg-danger text-decoration-none" href="/Cart?action=deleteSingle&id=${cartProduct.id}&quantity=1">-</a>
+                                        <span class="m-2">${cartProduct.quantity}</span>
+                                    <a class="badge rounded-pill bg-primary text-decoration-none" href="/Cart?action=add&id=${cartProduct.id}&quantity=1">+</a>
                                 </td>
                                 <td>${cartProduct.price}</td>
                                 <td>
