@@ -4,7 +4,7 @@
 <!--nav-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light px-5">
     <a class="navbar-brand" href="/">RusterShop</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -25,7 +25,7 @@
                             <c:out value="${sessionScope.cartProducts.size()}"/></span>
                     </c:if>
                 </a>
-                <a class="nav-item nav-link ms-5 text-danger mx-2" href="/Logout"><i class="bi bi-box-arrow-left"></i> Logout</a>
+                <a class="nav-item nav-link ms-5 text-danger md-mx-2" href="/Logout"><i class="bi bi-box-arrow-left"></i> Logout</a>
             </c:if>
         </div>
     </div>

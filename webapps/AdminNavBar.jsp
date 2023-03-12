@@ -1,7 +1,7 @@
 <!--nav-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light px-5">
     <a class="navbar-brand" href="/Admin">RusterShop</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -15,7 +15,7 @@
                 <a class="nav-item nav-link active mx-2" href="/AddProduct"><i class="bi bi-plus-square-fill"></i> Add Products</a>
                 <a class="nav-item nav-link active mx-2" href="/UserList"><i class="bi bi-person-lines-fill"></i> User List</a>
                 <a class="nav-item nav-link active mx-2" href="/Profile"><i class="bi bi-person-circle"></i> Profile</a>
-                <a class="nav-item nav-link ms-5 text-danger mx-2" href="/Logout"><i class="bi bi-box-arrow-left"></i> Logout</a>
+                <a class="nav-item nav-link ms-5 text-danger md-mx-2" href="/Logout"><i class="bi bi-box-arrow-left"></i> Logout</a>
             </c:if>
         </div>
     </div>
