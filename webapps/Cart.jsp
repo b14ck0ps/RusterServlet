@@ -38,6 +38,15 @@
                                 </td>
                             </tr>
                         </c:forEach>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td><strong>Total:</strong></td>
+                            <td class="text-left">${sessionScope.totalPrice}</td>
+                            <td>
+                                <a href="/Cart?action=checkout" class="btn btn-success">Checkout</a>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
