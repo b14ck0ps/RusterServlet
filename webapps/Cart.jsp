@@ -7,7 +7,10 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card p-3 m-2">
-                    <h1>Cart</h1>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h1>Cart</h1>
+                        <p>Total Items: ${cartProducts.size().toString()}</p>
+                    </div>
                     <table class="table table-striped">
                         <thead>
                         <tr>
@@ -21,12 +24,16 @@
                         <tbody>
                         <c:forEach items="${cartProducts}" var="cartProduct">
                             <tr>
-                                <td><img width="50px" src="${cartProduct.image}"  alt="${cartProduct.productName}"/></td>
+                                <td><img width="50px" src="${cartProduct.image}" alt="${cartProduct.productName}"/></td>
                                 <td>${cartProduct.productName}</td>
-                                <td>${cartProduct.quantity}</td>
+                                <td>
+                                    <a href="/Cart?action=deleteSingle&id=${cartProduct.id}&quantity=1">-</a>
+                                        ${cartProduct.quantity}
+                                    <a href="/Cart?action=add&id=${cartProduct.id}&quantity=1">+</a>
+                                </td>
                                 <td>${cartProduct.price}</td>
                                 <td>
-                                    <a href="Cart?action=delete&id=${cartProduct.id}"
+                                    <a href="/Cart?action=delete&id=${cartProduct.id}"
                                        class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>
