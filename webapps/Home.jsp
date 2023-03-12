@@ -12,7 +12,7 @@
                     <h5 class="card-title">${product.name}</h5>
                     <p class="card-text">Price: ${product.price}</p>
                     <p class="card-text">Stock: ${product.quantity}</p>
-                    <a href="#" class="btn btn-primary">Add to Cart</a>
+                    <a href="/Cart?action=add&id=${product.id}&quantity=1" class="btn btn-primary">Add to Cart</a>
                 </div>
             </div>
         </c:forEach>

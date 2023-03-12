@@ -27,7 +27,7 @@ public class Home extends HttpServlet {
             }
             Product product;
             try {
-                productsList.add(new Product(products.getString("ProductName"), products.getInt("CategoryId"), products.getInt("quantity"), products.getDouble("Price"), products.getString("image")));
+                productsList.add(new Product(products.getInt("id"),products.getString("ProductName"), products.getInt("CategoryId"), products.getInt("quantity"), products.getDouble("Price"), products.getString("image")));
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
