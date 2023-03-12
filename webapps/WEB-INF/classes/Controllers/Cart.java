@@ -47,8 +47,14 @@ public class Cart extends HttpServlet {
         //calculate total price
         List<CartProduct> cartProducts = (List<CartProduct>) req.getSession().getAttribute("cartProducts");
         var totalPrice = 0.0;
-        for (CartProduct cartProduct : cartProducts) {
-            totalPrice += cartProduct.getPrice();
+        if (cartProducts != null) {
+            for (CartProduct cartProduct : cartProducts) {
+                totalPrice += cartProduct.getPrice();
+            }
+        }
+        if (cartProducts == null || cartProducts.size() == 0) {
+            cartProducts = new java.util.ArrayList<>();
+            req.getSession().setAttribute("cartProducts", cartProducts);
         }
         req.getSession().setAttribute("totalPrice", totalPrice);
         req.getRequestDispatcher("Cart.jsp").forward(req, resp);
