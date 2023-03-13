@@ -2,18 +2,28 @@ package DBservices;
 
 import Models.*;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 
 public class DatabaseOperations {
+    private static DataSource dataSource;
+
+    public DatabaseOperations() throws NamingException {
+        Context context = new InitialContext();
+        dataSource = (DataSource) context.lookup("java:/comp/env/jdbc/rustershop");
+    }
+
     public static Connection getConnection() {
         Connection con = null;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/rustershop", "root", "");
+            con = dataSource.getConnection();
         } catch (Exception e) {
-            System.out.println(e);
+            //TODO: Fix this error
+            System.out.println("error ->" + e.getMessage());
         }
         return con;
     }
