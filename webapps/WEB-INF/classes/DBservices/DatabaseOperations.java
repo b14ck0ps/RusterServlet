@@ -300,4 +300,21 @@ public class DatabaseOperations {
             return order;
         }
     }
+
+    //get user by email
+    public static User getUserByEmail(String email) {
+        User user = null;
+        try {
+            Connection con = getConnection();
+            var ps = con.prepareStatement("SELECT * FROM Users WHERE email = ?");
+            ps.setString(1, email);
+            var rs = ps.executeQuery();
+            if (rs.next()) {
+                user = new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"), rs.getString("email"), UserType.valueOf(rs.getString("userType")));
+            }
+            return user;
+        } catch (Exception e) {
+            return user;
+        }
+    }
 }

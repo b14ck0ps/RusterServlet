@@ -23,39 +23,72 @@ public class Registration extends HttpServlet {
         var email = req.getParameter("email");
         var userType = req.getParameter("UserType");
 
-        //validate the data individually
-        if (username == null || username.isEmpty()) {
-            req.setAttribute("usernameError", "Username is required");
+        String[] fields = {username, password, email};
+        String[] fieldNames = {"username", "password", "email"};
 
-        }
-        if (password == null || password.isEmpty()) {
-            req.setAttribute("passwordError", "Password is required");
+        boolean isFormValid = true;
 
+        // Checking if all fields are filled
+        for (int i = 0; i < fields.length; i++) {
+            if (!Validation.FormValidation.inputExist(fields[i])) {
+                String errorMessage = fieldNames[i] + " is required";
+                setValidationError(req, username, password, email, errorMessage, fieldNames[i]);
+                isFormValid = false;
+            }
         }
-        if (email == null || email.isEmpty()) {
-            req.setAttribute("emailError", "Email is required");
+        if (isValid(req, resp, isFormValid)) return;
+        // Checking if fields are valid
+        if (!Validation.FormValidation.emailIsValid(email)) {
+            setValidationError(req, username, password, email, "Email is not valid", "email");
+            isFormValid = false;
         }
-
-        if (username == null || username.isEmpty() || password == null || password.isEmpty() || email == null || email.isEmpty()) {
-            req.setAttribute("oldEmail" , email);
-            req.setAttribute("oldUsername" , username);
-            req.setAttribute("oldPassword" , password);
-            req.getRequestDispatcher("Registration.jsp").forward(req, resp);
-            return;
+        if (!Validation.FormValidation.passwordIsValid(password)) {
+            setValidationError(req, username, password, email, "Password is not valid", "password");
+            isFormValid = false;
         }
-        UserType Type;
-        if (userType.equals("admin")) {
-            Type = UserType.ADMIN;
-        } else {
-            Type = UserType.CUSTOMER;
+        if (isValid(req, resp, isFormValid)) return;
+        // Checking if fields are unique
+        if (Validation.DatabaseValidation.usernameExists(username)) {
+            setValidationError(req, username, password, email, "Username already exists", "username");
+            isFormValid = false;
         }
-
+        if (Validation.DatabaseValidation.emailExists(email)) {
+            setValidationError(req, username, password, email, "Email already exists", "email");
+            isFormValid = false;
+        }
+        if (isValid(req, resp, isFormValid)) return;
+        // Registering user
+        UserType Type = userType == null || userType.equals("Customer") ? UserType.CUSTOMER : UserType.ADMIN;
         var user = new Models.User(username, password, email, Type);
-        DBservices.DatabaseOperations.RegisterUser(user);
         if (DBservices.DatabaseOperations.RegisterUser(user) == 1) {
             req.getRequestDispatcher("Login.jsp").forward(req, resp);
         } else {
             req.getRequestDispatcher("Registration.jsp").forward(req, resp);
         }
+    }
+
+    private static boolean isValid(HttpServletRequest req, HttpServletResponse resp, boolean isFormValid) throws ServletException, IOException {
+        if (!isFormValid) {
+            req.getRequestDispatcher("Registration.jsp").forward(req, resp);
+            return true;
+        }
+        return false;
+    }
+
+    private void setValidationError(HttpServletRequest request, String username, String password, String email, String errorMessage, String fieldName) {
+        switch (fieldName) {
+            case "username" -> {
+                request.setAttribute("usernameError", errorMessage);
+            }
+            case "password" -> {
+                request.setAttribute("passwordError", errorMessage);
+            }
+            case "email" -> {
+                request.setAttribute("emailError", errorMessage);
+            }
+        }
+        request.setAttribute("oldUsername", username);
+        request.setAttribute("oldPassword", password);
+        request.setAttribute("oldEmail", email);
     }
 }
