@@ -1,6 +1,5 @@
 package Controllers;
 
-import DBservices.DatabaseOperations;
 import Models.Product;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -12,12 +11,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static DBservices.ProductRepository.getAllProducts;
+
 public class Home extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        var products = DatabaseOperations.getAllProducts();
+        var products = getAllProducts();
         List<Product> productsList = new ArrayList<>();
         while (true) {
             try {

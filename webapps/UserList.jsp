@@ -2,7 +2,7 @@
 <%@include file="AdminNavBar.jsp" %>
 <%@ page isELIgnored="false" %>
 <%@ page import="java.sql.ResultSet" %>
-<%@ page import="DBservices.DatabaseOperations" %>
+<%@ page import="DBservices.DatabasesConnection" %>
 <main>
     <div class="container">
         <div class="row">
@@ -20,7 +20,7 @@
                         </thead>
                         <tbody>
                         <%
-                            ResultSet rs = DatabaseOperations.getAllUsers();
+                            ResultSet rs = DatabasesConnection.getAllUsers();
                             int i = 1;
                             while (rs.next()) {
                                 out.println("<tr>");

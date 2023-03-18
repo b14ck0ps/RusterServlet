@@ -1,5 +1,6 @@
 package Controllers;
 
+import DBservices.DatabasesConnection;
 import Models.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -8,12 +9,15 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import static DBservices.UserRepository.getUserByUsername;
+import static DBservices.UserRepository.updateUser;
+
 public class Profile extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        var user = DBservices.DatabaseOperations.getUserByUsername((String) req.getSession().getAttribute("user"));
+        var user = getUserByUsername((String) req.getSession().getAttribute("user"));
         req.setAttribute("user", user);
         if (req.getParameter("edit") != null) {
             req.getRequestDispatcher("ProfileEdit.jsp").forward(req, resp);
@@ -48,7 +52,7 @@ public class Profile extends HttpServlet {
         }
         if (isValid(req, resp, isFormValid)) return;
         // Checking if fields are unique
-        var user = DBservices.DatabaseOperations.getUserByUsername((String) req.getSession().getAttribute("user"));
+        var user = getUserByUsername((String) req.getSession().getAttribute("user"));
         var userType = user.getUserType();
         if (!user.getUsername().equals(username) && Validation.DatabaseValidation.usernameExists(username)) {
             setValidationError(req, username, email, "Username already exists", "username");
@@ -61,7 +65,7 @@ public class Profile extends HttpServlet {
         if (isValid(req, resp, isFormValid)) return;
 
         if (password == null || password.isEmpty()) {
-            password = DBservices.DatabaseOperations.getUserByUsername((String) req.getSession().getAttribute("user")).getPassword();
+            password = getUserByUsername((String) req.getSession().getAttribute("user")).getPassword();
         } else {
             if (!Validation.FormValidation.passwordIsValid(password)) {
                 setValidationError(req, username, email, "Password is not valid", "password");
@@ -72,7 +76,7 @@ public class Profile extends HttpServlet {
         user.setUsername(username);
         user.setEmail(email);
         user.setPassword(password);
-        if (DBservices.DatabaseOperations.updateUser(user) == 1) {
+        if (updateUser(user) == 1) {
             req.getSession().setAttribute("user", username);
             req.getSession().setAttribute("userType", userType.toString());
             resp.sendRedirect("/Profile");
@@ -94,7 +98,7 @@ public class Profile extends HttpServlet {
         var user = new User();
         user.setUsername(username);
         user.setEmail(email);
-        user.setUserType(DBservices.DatabaseOperations.getUserByUsername((String) request.getSession().getAttribute("user")).getUserType());
+        user.setUserType(getUserByUsername((String) request.getSession().getAttribute("user")).getUserType());
         request.setAttribute("user", user);
     }
 

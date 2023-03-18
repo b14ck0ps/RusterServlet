@@ -1,6 +1,5 @@
 package Controllers;
 
-import DBservices.DatabaseOperations;
 import Models.Product;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -12,6 +11,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static DBservices.ProductRepository.deleteProduct;
+import static DBservices.ProductRepository.getAllProducts;
+
 public class Admin extends HttpServlet {
 
     @Override
@@ -20,11 +22,11 @@ public class Admin extends HttpServlet {
         var delete = req.getParameter("delete");
         if (delete != null) {
             var id = Integer.parseInt(delete);
-            DBservices.DatabaseOperations.deleteProduct(id);
+            deleteProduct(id);
             resp.sendRedirect("Admin");
             return;
         }
-        var products = DatabaseOperations.getAllProducts();
+        var products = getAllProducts();
         List<Product> productsList = new ArrayList<>();
         while (true) {
             try {

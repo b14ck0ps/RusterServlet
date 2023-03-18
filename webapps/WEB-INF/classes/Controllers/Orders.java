@@ -9,6 +9,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import static DBservices.OrderRepository.*;
+import static DBservices.ProductRepository.getProductById;
+import static DBservices.UserRepository.getUserByUsername;
+
 public class Orders extends HttpServlet {
 
     @Override
@@ -20,8 +24,8 @@ public class Orders extends HttpServlet {
             resp.sendRedirect("Login");
             return;
         }
-        var user = DBservices.DatabaseOperations.getUserByUsername(username.toString());
-        var orders = DBservices.DatabaseOperations.getAllOrdersByUserId(user.getId());
+        var user = getUserByUsername(username.toString());
+        var orders = getAllOrdersByUserId(user.getId());
         var ordersList = new java.util.ArrayList<Order>();
         Order orderList = null;
         while (true) {
@@ -53,7 +57,7 @@ public class Orders extends HttpServlet {
 
     private void OrderDetails(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         var orderId = Integer.parseInt(req.getParameter("orderId"));
-        var Items = DBservices.DatabaseOperations.getProductsByOrderId(orderId);
+        var Items = getProductsByOrderId(orderId);
         var ItemsList = new java.util.ArrayList<Models.CartProduct>();
         Models.CartProduct ItemList = null;
         while (true) {
@@ -63,7 +67,7 @@ public class Orders extends HttpServlet {
                 throw new RuntimeException(e);
             }
             try {
-                var product = DBservices.DatabaseOperations.getProductById(Items.getInt("ProductId"));
+                var product = getProductById(Items.getInt("ProductId"));
                 if (!product.next()) break;
                 ItemList = new Models.CartProduct(product.getInt("id"), product.getString("ProductName"), Items.getInt("quantity"), product.getDouble("Price") * Items.getInt("quantity"), product.getString("Image"));
             } catch (SQLException e) {
@@ -71,7 +75,7 @@ public class Orders extends HttpServlet {
             }
             ItemsList.add(ItemList);
         }
-        var order = DBservices.DatabaseOperations.getOrderById(orderId);
+        var order = getOrderById(orderId);
         req.setAttribute("orderId", orderId);
         req.setAttribute("orderDate", order.getDate());
         req.setAttribute("orderTotal", order.getTotalPrice());

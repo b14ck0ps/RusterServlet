@@ -8,6 +8,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import static DBservices.UserRepository.LoginUser;
+import static DBservices.UserRepository.getUserTypeByUsername;
+
 public class Login extends HttpServlet {
 
     @Override
@@ -27,13 +30,13 @@ public class Login extends HttpServlet {
             return;
         }
 
-        var user = DBservices.DatabaseOperations.LoginUser(username, password);
+        var user = LoginUser(username, password);
         if (user == 0) {
             req.setAttribute("invalid", "Username or password is incorrect");
             req.getRequestDispatcher("Login.jsp").forward(req, resp);
         } else {
             req.getSession().setAttribute("user", username);
-            var userType = DBservices.DatabaseOperations.getUserTypeByUsername(username);
+            var userType = getUserTypeByUsername(username);
             req.getSession().setAttribute("userType", userType.toString());
             if (userType == UserType.ADMIN) {
                 resp.sendRedirect("Admin");

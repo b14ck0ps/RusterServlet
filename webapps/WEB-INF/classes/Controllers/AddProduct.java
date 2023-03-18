@@ -1,6 +1,5 @@
 package Controllers;
 
-import DBservices.DatabaseOperations;
 import Models.Category;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -13,12 +12,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static DBservices.ProductRepository.InsertProduct;
+import static DBservices.ProductRepository.getAllCategories;
+
 public class AddProduct extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        ResultSet rsc = DatabaseOperations.getAllCategories();
+        ResultSet rsc = getAllCategories();
         List<Category> categories = new ArrayList<Category>();
         while (true) {
             try {
@@ -52,7 +54,7 @@ public class AddProduct extends HttpServlet {
         var image = req.getParameter("image");
 
         var product = new Models.Product(productName, categoryId, quantity, price, image);
-        var status = DBservices.DatabaseOperations.InsertProduct(product);
+        var status = InsertProduct(product);
         if (status == 1) {
             resp.sendRedirect("Admin");
         } else {
