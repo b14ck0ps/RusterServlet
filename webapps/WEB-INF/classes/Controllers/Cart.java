@@ -106,6 +106,7 @@ public class Cart extends HttpServlet {
                     var ItemPrice = product.getPrice();
                     cartProducts.get(i).setPrice(ItemPrice * cartProducts.get(i).getQuantity());
                     req.getSession().setAttribute("cartProducts", cartProducts);
+                    return;
                 }
             }
             var name = product.getName();
