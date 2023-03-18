@@ -12,6 +12,10 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import static DBservices.OrderRepository.*;
+import static DBservices.ProductRepository.getProductById;
+import static DBservices.UserRepository.getUserByUsername;
+
 public class Cart extends HttpServlet {
 
     @Override
@@ -94,24 +98,22 @@ public class Cart extends HttpServlet {
             cartProducts = new java.util.ArrayList<>();
         }
         if (id != null && quantity != null) {
-            var product = DBservices.DatabaseOperations.getProductById(Integer.parseInt(id));
+            var product = getProductById(Integer.parseInt(id));
             //check if product already exists in cart
             for (var i = 0; i < cartProducts.size(); i++) {
                 if (cartProducts.get(i).getId() == Integer.parseInt(id)) {
                     cartProducts.get(i).setQuantity(cartProducts.get(i).getQuantity() + Integer.parseInt(quantity));
-                    if (product.next()) {
-                        var ItemPrice = product.getDouble("Price");
-                        cartProducts.get(i).setPrice(ItemPrice * cartProducts.get(i).getQuantity());
-                    }
+                    var ItemPrice = product.getPrice();
+                    cartProducts.get(i).setPrice(ItemPrice * cartProducts.get(i).getQuantity());
                     req.getSession().setAttribute("cartProducts", cartProducts);
+                    return;
                 }
             }
-            if (product.next()) {
-                var name = product.getString("ProductName");
-                var price = product.getDouble("Price");
-                var image = product.getString("image");
-                cartProducts.add(new CartProduct(Integer.parseInt(id), name, Integer.parseInt(quantity), Integer.parseInt(quantity) * price, image));
-            }
+            var name = product.getName();
+            var price = product.getPrice();
+            var image = product.getImage();
+            cartProducts.add(new CartProduct(Integer.parseInt(id), name, Integer.parseInt(quantity), Integer.parseInt(quantity) * price, image));
+
             req.getSession().setAttribute("cartProducts", cartProducts);
         }
     }
@@ -144,11 +146,9 @@ public class Cart extends HttpServlet {
                 if (cartProducts.get(i).getId() == Integer.parseInt(id)) {
                     if (cartProducts.get(i).getQuantity() > 1) {
                         cartProducts.get(i).setQuantity(cartProducts.get(i).getQuantity() - 1);
-                        var product = DBservices.DatabaseOperations.getProductById(Integer.parseInt(id));
-                        if (product.next()) {
-                            var ItemPrice = product.getDouble("Price");
-                            cartProducts.get(i).setPrice(cartProducts.get(i).getPrice() - ItemPrice);
-                        }
+                        var product = getProductById(Integer.parseInt(id));
+                        var ItemPrice = product.getPrice();
+                        cartProducts.get(i).setPrice(ItemPrice * cartProducts.get(i).getQuantity());
                     } else {
                         cartProducts.remove(i);
                     }
@@ -175,15 +175,15 @@ public class Cart extends HttpServlet {
         }
         var totalPrice = req.getSession().getAttribute("totalPrice");
         var date = new java.sql.Date(new java.util.Date().getTime());
-        var user = DBservices.DatabaseOperations.getUserByUsername(req.getSession().getAttribute("user").toString());
+        var user = getUserByUsername(req.getSession().getAttribute("user").toString());
         var order = new Order(user.getId(), (Double) totalPrice, date);
-        if (DBservices.DatabaseOperations.storeOrder(order) == 1) {
+        if (storeOrder(order) == 1) {
             ////get last order id from database and set it to order object to be used in orderproduct table as foreign key
-            order.setId(DBservices.DatabaseOperations.getLastOrderId());
+            order.setId(getLastOrderId());
             //save orderproducts to database
             for (CartProduct cartProduct : cartProducts) {
                 var orderProduct = new OrderProduct(order.getId(), cartProduct.getId(), cartProduct.getQuantity());
-                DBservices.DatabaseOperations.storeOrderProduct(orderProduct);
+                storeOrderProduct(orderProduct);
             }
             cartProducts.clear();
         }

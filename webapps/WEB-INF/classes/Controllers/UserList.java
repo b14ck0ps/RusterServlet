@@ -12,6 +12,8 @@ public class UserList extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
+        var usersList = DBservices.UserRepository.getAllUsers();
+        req.setAttribute("users", usersList);
         req.getRequestDispatcher("UserList.jsp").forward(req, resp);
     }
 

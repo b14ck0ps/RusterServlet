@@ -1,5 +1,6 @@
 package Controllers;
 
+import DBservices.DatabasesConnection;
 import Models.UserType;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -7,6 +8,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+
+import static DBservices.UserRepository.RegisterUser;
 
 public class Registration extends HttpServlet {
 
@@ -60,7 +63,7 @@ public class Registration extends HttpServlet {
         // Registering user
         UserType Type = userType == null || userType.equals("Customer") ? UserType.CUSTOMER : UserType.ADMIN;
         var user = new Models.User(username, password, email, Type);
-        if (DBservices.DatabaseOperations.RegisterUser(user) == 1) {
+        if (RegisterUser(user) == 1) {
             req.getRequestDispatcher("Login.jsp").forward(req, resp);
         } else {
             req.getRequestDispatcher("Registration.jsp").forward(req, resp);

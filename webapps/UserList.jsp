@@ -1,8 +1,9 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@include file="Header.jsp" %>
 <%@include file="AdminNavBar.jsp" %>
 <%@ page isELIgnored="false" %>
 <%@ page import="java.sql.ResultSet" %>
-<%@ page import="DBservices.DatabaseOperations" %>
+<c:set var="products" value="${requestScope.usersList}"/>
 <main>
     <div class="container">
         <div class="row">
@@ -19,19 +20,14 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <%
-                            ResultSet rs = DatabaseOperations.getAllUsers();
-                            int i = 1;
-                            while (rs.next()) {
-                                out.println("<tr>");
-                                out.println("<th scope=\"row\">" + i + "</th>");
-                                out.println("<td>" + rs.getString("username") + "</td>");
-                                out.println("<td>" + rs.getString("email") + "</td>");
-                                out.println("<td>" + rs.getString("userType") + "</td>");
-                                out.println("</tr>");
-                                i++;
-                            }
-                        %>
+                        <c:forEach var="user" items="${users}">
+                            <tr>
+                                <th scope="row">${user.id}</th>
+                                <td>${user.username}</td>
+                                <td>${user.email}</td>
+                                <td>${user.userType}</td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>

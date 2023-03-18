@@ -1,11 +1,14 @@
 package Validation;
 
+import static DBservices.UserRepository.getUserByEmail;
+import static DBservices.UserRepository.getUserByUsername;
+
 public class DatabaseValidation {
     public static boolean usernameExists(String username) {
-        return (DBservices.DatabaseOperations.getUserByUsername(username) != null);
+        return (getUserByUsername(username) != null);
     }
 
     public static boolean emailExists(String email) {
-        return (DBservices.DatabaseOperations.getUserByEmail(email) != null);
+        return (getUserByEmail(email) != null);
     }
 }
