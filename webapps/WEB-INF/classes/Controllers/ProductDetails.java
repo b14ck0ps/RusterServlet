@@ -23,27 +23,7 @@ public class ProductDetails extends HttpServlet {
         var product = getProductById(id);
         req.setAttribute("id", id);
         req.setAttribute("product", product);
-        ResultSet rsc = getAllCategories();
-        List<Category> categories = new ArrayList<Category>();
-        while (true) {
-            try {
-                if (!rsc.next()) break;
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            Category category = new Category();
-            try {
-                category.setId(rsc.getInt("id"));
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            try {
-                category.setName(rsc.getString("CategoryName"));
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            categories.add(category);
-        }
+        var categories = getAllCategories();
         req.setAttribute("categories", categories);
         req.getRequestDispatcher("ProductDetails.jsp").forward(req, resp);
     }

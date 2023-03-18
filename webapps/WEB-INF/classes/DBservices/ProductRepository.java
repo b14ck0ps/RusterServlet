@@ -1,5 +1,6 @@
 package DBservices;
 
+import Models.Category;
 import Models.Product;
 
 import java.sql.Connection;
@@ -58,16 +59,19 @@ public class ProductRepository {
         return product;
     }
 
-    public static ResultSet getAllCategories() {
-        ResultSet rs = null;
-        try (Connection con = getConnection()) {
-
-            var ps = con.prepareStatement("SELECT * FROM category");
-            rs = ps.executeQuery();
-            return rs;
-        } catch (Exception e) {
-            return rs;
+    public static List<Category> getAllCategories() {
+        List<Category> categories = new ArrayList<>();
+        try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement("SELECT * FROM category"); ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Category category = new Category();
+                category.setId(rs.getInt("id"));
+                category.setName(rs.getString("CategoryName"));
+                categories.add(category);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+        return categories;
     }
 
     public static int deleteProduct(int id) {

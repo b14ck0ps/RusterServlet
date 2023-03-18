@@ -1,16 +1,11 @@
 package Controllers;
 
-import Models.Category;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static DBservices.ProductRepository.InsertProduct;
 import static DBservices.ProductRepository.getAllCategories;
@@ -20,27 +15,7 @@ public class AddProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        ResultSet rsc = getAllCategories();
-        List<Category> categories = new ArrayList<Category>();
-        while (true) {
-            try {
-                if (!rsc.next()) break;
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            Category category = new Category();
-            try {
-                category.setId(rsc.getInt("id"));
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            try {
-                category.setName(rsc.getString("CategoryName"));
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            categories.add(category);
-        }
+        var categories = getAllCategories();
         req.setAttribute("categories", categories);
         req.getRequestDispatcher("AddProduct.jsp").forward(req, resp);
     }

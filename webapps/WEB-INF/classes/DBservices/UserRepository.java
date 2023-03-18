@@ -4,6 +4,8 @@ import Models.User;
 import Models.UserType;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 
 import static DBservices.DatabasesConnection.getConnection;
 
@@ -103,6 +105,21 @@ public class UserRepository {
             return user;
         } catch (Exception e) {
             return user;
+        }
+    }
+
+    //getALlUsers
+    public static List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
+        try (Connection con = getConnection()) {
+            var ps = con.prepareStatement("SELECT * FROM Users");
+            var rs = ps.executeQuery();
+            while (rs.next()) {
+                users.add(new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"), rs.getString("email"), UserType.valueOf(rs.getString("userType"))));
+            }
+            return users;
+        } catch (Exception e) {
+            return users;
         }
     }
 }
