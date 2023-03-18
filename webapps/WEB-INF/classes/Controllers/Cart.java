@@ -1,6 +1,5 @@
 package Controllers;
 
-import DBservices.DatabasesConnection;
 import Models.CartProduct;
 import Models.Order;
 import Models.OrderProduct;
@@ -104,19 +103,16 @@ public class Cart extends HttpServlet {
             for (var i = 0; i < cartProducts.size(); i++) {
                 if (cartProducts.get(i).getId() == Integer.parseInt(id)) {
                     cartProducts.get(i).setQuantity(cartProducts.get(i).getQuantity() + Integer.parseInt(quantity));
-                    if (product.next()) {
-                        var ItemPrice = product.getDouble("Price");
-                        cartProducts.get(i).setPrice(ItemPrice * cartProducts.get(i).getQuantity());
-                    }
+                    var ItemPrice = product.getPrice();
+                    cartProducts.get(i).setPrice(ItemPrice * cartProducts.get(i).getQuantity());
                     req.getSession().setAttribute("cartProducts", cartProducts);
                 }
             }
-            if (product.next()) {
-                var name = product.getString("ProductName");
-                var price = product.getDouble("Price");
-                var image = product.getString("image");
-                cartProducts.add(new CartProduct(Integer.parseInt(id), name, Integer.parseInt(quantity), Integer.parseInt(quantity) * price, image));
-            }
+            var name = product.getName();
+            var price = product.getPrice();
+            var image = product.getImage();
+            cartProducts.add(new CartProduct(Integer.parseInt(id), name, Integer.parseInt(quantity), Integer.parseInt(quantity) * price, image));
+
             req.getSession().setAttribute("cartProducts", cartProducts);
         }
     }
@@ -150,10 +146,8 @@ public class Cart extends HttpServlet {
                     if (cartProducts.get(i).getQuantity() > 1) {
                         cartProducts.get(i).setQuantity(cartProducts.get(i).getQuantity() - 1);
                         var product = getProductById(Integer.parseInt(id));
-                        if (product.next()) {
-                            var ItemPrice = product.getDouble("Price");
-                            cartProducts.get(i).setPrice(cartProducts.get(i).getPrice() - ItemPrice);
-                        }
+                        var ItemPrice = product.getPrice();
+                        cartProducts.get(i).setPrice(ItemPrice * cartProducts.get(i).getQuantity());
                     } else {
                         cartProducts.remove(i);
                     }

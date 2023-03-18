@@ -4,15 +4,13 @@ import Models.User;
 import Models.UserType;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 
 import static DBservices.DatabasesConnection.getConnection;
 
 public class UserRepository {
     public static int RegisterUser(User p) {
         int status = 0;
-        try {
-            Connection con = getConnection();
+        try (Connection con = getConnection()) {
             var ps = con.prepareStatement("INSERT INTO Users (username, password, email, userType) values(?,?,?,?)");
             ps.setString(1, p.getUsername());
             ps.setString(2, p.getPassword());
@@ -28,8 +26,7 @@ public class UserRepository {
 
     public static int LoginUser(String username, String password) {
         int status = 0;
-        try {
-            Connection con = getConnection();
+        try (Connection con = getConnection()) {
             var ps = con.prepareStatement("SELECT * FROM Users WHERE username = ? AND password = ?");
             ps.setString(1, username);
             ps.setString(2, password);
@@ -43,23 +40,10 @@ public class UserRepository {
         }
     }
 
-    public static ResultSet getAllUsers() {
-        ResultSet rs = null;
-        try {
-            Connection con = getConnection();
-            var ps = con.prepareStatement("SELECT * FROM Users");
-            rs = ps.executeQuery();
-            return rs;
-        } catch (Exception e) {
-            return rs;
-        }
-    }
-
     //get user type by username
     public static UserType getUserTypeByUsername(String username) {
         UserType userType = null;
-        try {
-            Connection con = getConnection();
+        try (Connection con = getConnection()) {
             var ps = con.prepareStatement("SELECT userType FROM Users WHERE username = ?");
             ps.setString(1, username);
             var rs = ps.executeQuery();
@@ -75,8 +59,7 @@ public class UserRepository {
     //get user by username
     public static User getUserByUsername(String username) {
         User user = null;
-        try {
-            Connection con = getConnection();
+        try (Connection con = getConnection()) {
             var ps = con.prepareStatement("SELECT * FROM Users WHERE username = ?");
             ps.setString(1, username);
             var rs = ps.executeQuery();
@@ -92,8 +75,7 @@ public class UserRepository {
     //update user
     public static int updateUser(User p) {
         int status = 0;
-        try {
-            Connection con = getConnection();
+        try (Connection con = getConnection()) {
             var ps = con.prepareStatement("UPDATE Users SET username = ?, password = ?, email = ?, userType = ? WHERE id = ?");
             ps.setString(1, p.getUsername());
             ps.setString(2, p.getPassword());
@@ -111,8 +93,7 @@ public class UserRepository {
     //get user by email
     public static User getUserByEmail(String email) {
         User user = null;
-        try {
-            Connection con = getConnection();
+        try (Connection con = getConnection()) {
             var ps = con.prepareStatement("SELECT * FROM Users WHERE email = ?");
             ps.setString(1, email);
             var rs = ps.executeQuery();

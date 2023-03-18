@@ -1,6 +1,5 @@
 package Controllers;
 
-import DBservices.DatabasesConnection;
 import Models.Category;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -21,16 +20,9 @@ public class ProductDetails extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         var id = Integer.parseInt(req.getParameter("id"));
-        var rs = getProductById(id);
+        var product = getProductById(id);
         req.setAttribute("id", id);
-        try {
-            if (rs.next()) {
-                var product = new Models.Product(rs.getString("ProductName"), rs.getInt("CategoryId"), rs.getInt("quantity"), rs.getDouble("Price"), rs.getString("image"));
-                req.setAttribute("product", product);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        req.setAttribute("product", product);
         ResultSet rsc = getAllCategories();
         List<Category> categories = new ArrayList<Category>();
         while (true) {
