@@ -1,6 +1,5 @@
 <%@include file="Header.jsp" %>
 <%@include file="CutomerNavBar.jsp" %>
-<%@ page import="jakarta.servlet.http.HttpServletRequest" %>
 <%@ page isELIgnored="false" %>
 <main class="mt-5">
     <div class="container d-flex flex-column justify-content-center align-items-center">
@@ -12,7 +11,7 @@
                 <form action="/Login" method="post">
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" aria-describedby="emailHelp"
+                        <input type="text" class="form-control" id="username"
                                name="username" value="${requestScope.oldUsername}">
                     </div>
                     <div class="mb-3">

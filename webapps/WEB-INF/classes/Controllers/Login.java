@@ -33,6 +33,7 @@ public class Login extends HttpServlet {
         var user = LoginUser(username, password);
         if (user == 0) {
             req.setAttribute("invalid", "Username or password is incorrect");
+            req.setAttribute("oldUsername", username);
             req.getRequestDispatcher("/Views/Login.jsp").forward(req, resp);
         } else {
             req.getSession().setAttribute("user", username);
