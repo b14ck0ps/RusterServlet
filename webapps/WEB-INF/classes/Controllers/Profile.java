@@ -20,9 +20,9 @@ public class Profile extends HttpServlet {
         var user = getUserByUsername((String) req.getSession().getAttribute("user"));
         req.setAttribute("user", user);
         if (req.getParameter("edit") != null) {
-            req.getRequestDispatcher("ProfileEdit.jsp").forward(req, resp);
+            req.getRequestDispatcher("/Views/ProfileEdit.jsp").forward(req, resp);
         }
-        req.getRequestDispatcher("Profile.jsp").forward(req, resp);
+        req.getRequestDispatcher("/Views/Profile.jsp").forward(req, resp);
     }
 
     @Override
@@ -82,7 +82,7 @@ public class Profile extends HttpServlet {
             resp.sendRedirect("/Profile");
         } else {
             req.setAttribute("error", "Something went wrong");
-            req.getRequestDispatcher("ProfileEdit.jsp").forward(req, resp);
+            req.getRequestDispatcher("/Views/ProfileEdit.jsp").forward(req, resp);
         }
     }
 
@@ -104,7 +104,7 @@ public class Profile extends HttpServlet {
 
     private static boolean isValid(HttpServletRequest req, HttpServletResponse resp, boolean isFormValid) throws ServletException, IOException {
         if (!isFormValid) {
-            req.getRequestDispatcher("ProfileEdit.jsp").forward(req, resp);
+            req.getRequestDispatcher("/Views/ProfileEdit.jsp").forward(req, resp);
             return true;
         }
         return false;

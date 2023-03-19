@@ -16,7 +16,7 @@ public class Registration extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        req.getRequestDispatcher("Registration.jsp").forward(req, resp);
+        req.getRequestDispatcher("/Views/Registration.jsp").forward(req, resp);
     }
 
     @Override
@@ -64,15 +64,15 @@ public class Registration extends HttpServlet {
         UserType Type = userType == null || userType.equals("Customer") ? UserType.CUSTOMER : UserType.ADMIN;
         var user = new Models.User(username, password, email, Type);
         if (RegisterUser(user) == 1) {
-            req.getRequestDispatcher("Login.jsp").forward(req, resp);
+            req.getRequestDispatcher("/Views/Login.jsp").forward(req, resp);
         } else {
-            req.getRequestDispatcher("Registration.jsp").forward(req, resp);
+            req.getRequestDispatcher("/Views/Registration.jsp").forward(req, resp);
         }
     }
 
     private static boolean isValid(HttpServletRequest req, HttpServletResponse resp, boolean isFormValid) throws ServletException, IOException {
         if (!isFormValid) {
-            req.getRequestDispatcher("Registration.jsp").forward(req, resp);
+            req.getRequestDispatcher("/Views/Registration.jsp").forward(req, resp);
             return true;
         }
         return false;

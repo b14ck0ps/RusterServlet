@@ -17,7 +17,7 @@ public class AddProduct extends HttpServlet {
         resp.setContentType("text/html");
         var categories = getAllCategories();
         req.setAttribute("categories", categories);
-        req.getRequestDispatcher("AddProduct.jsp").forward(req, resp);
+        req.getRequestDispatcher("/Views/AddProduct.jsp").forward(req, resp);
     }
 
     @Override

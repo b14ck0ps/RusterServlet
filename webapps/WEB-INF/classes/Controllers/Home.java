@@ -16,7 +16,7 @@ public class Home extends HttpServlet {
         resp.setContentType("text/html");
         var productsList = getAllProducts();
         req.setAttribute("products", productsList);
-        req.getRequestDispatcher("Home.jsp").forward(req, resp);
+        req.getRequestDispatcher("/Views/Home.jsp").forward(req, resp);
     }
 
     @Override

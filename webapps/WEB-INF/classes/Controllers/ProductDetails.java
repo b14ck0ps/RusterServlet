@@ -25,7 +25,7 @@ public class ProductDetails extends HttpServlet {
         req.setAttribute("product", product);
         var categories = getAllCategories();
         req.setAttribute("categories", categories);
-        req.getRequestDispatcher("ProductDetails.jsp").forward(req, resp);
+        req.getRequestDispatcher("/Views/ProductDetails.jsp").forward(req, resp);
     }
 
     @Override

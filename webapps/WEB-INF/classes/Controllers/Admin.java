@@ -24,7 +24,7 @@ public class Admin extends HttpServlet {
         }
         var productsList = getAllProducts();
         req.setAttribute("products", productsList);
-        req.getRequestDispatcher("AdminDashBoard.jsp").forward(req, resp);
+        req.getRequestDispatcher("/Views/AdminDashBoard.jsp").forward(req, resp);
     }
 
     @Override

@@ -14,7 +14,7 @@ public class UserList extends HttpServlet {
         resp.setContentType("text/html");
         var usersList = DBservices.UserRepository.getAllUsers();
         req.setAttribute("users", usersList);
-        req.getRequestDispatcher("UserList.jsp").forward(req, resp);
+        req.getRequestDispatcher("/Views/UserList.jsp").forward(req, resp);
     }
 
     @Override

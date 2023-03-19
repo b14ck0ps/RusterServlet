@@ -25,11 +25,11 @@ public class Orders extends HttpServlet {
         var ordersList = getAllOrdersByUserId(user.getId());
         if (req.getParameter("orderId") != null) {
             OrderDetails(req, resp);
-            req.getRequestDispatcher("OrdersDetails.jsp").forward(req, resp);
+            req.getRequestDispatcher("/Views/OrdersDetails.jsp").forward(req, resp);
             return;
         }
         req.setAttribute("orderList", ordersList);
-        req.getRequestDispatcher("Orders.jsp").forward(req, resp);
+        req.getRequestDispatcher("/Views/Orders.jsp").forward(req, resp);
     }
 
     @Override

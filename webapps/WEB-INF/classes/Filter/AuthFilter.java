@@ -17,7 +17,7 @@ public class AuthFilter implements Filter {
         //check if user is logged in
         var session = ((HttpServletRequest) servletRequest).getSession(false);
         if (session == null || session.getAttribute("user") == null) {
-            servletRequest.getRequestDispatcher("Login.jsp").forward(servletRequest, servletResponse);
+            servletRequest.getRequestDispatcher("/Views/Login.jsp").forward(servletRequest, servletResponse);
             return;
         }
         filterChain.doFilter(servletRequest, servletResponse);

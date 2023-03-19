@@ -82,7 +82,7 @@ public class Cart extends HttpServlet {
             req.getSession().setAttribute("cartProducts", cartProducts);
         }
         req.getSession().setAttribute("totalPrice", totalPrice);
-        req.getRequestDispatcher("Cart.jsp").forward(req, resp);
+        req.getRequestDispatcher("/Views/Cart.jsp").forward(req, resp);
     }
 
     @Override
