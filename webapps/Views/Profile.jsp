@@ -32,7 +32,7 @@
                         </h6>
                     </div>
                     <div class="col-md-6">
-                        <a class="btn btn-outline-primary" href="/Profile?edit">Edit Profile</a>
+                        <a class="btn btn-outline-primary" href="${pageContext.request.contextPath}/Profile?edit">Edit Profile</a>
                     </div>
                 </div>
             </div>

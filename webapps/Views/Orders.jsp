@@ -37,7 +37,7 @@
                                 <td>${order.id}</td>
                                 <td>${order.date}</td>
                                 <td>${order.totalPrice}</td>
-                                <td><a href="/Orders?orderId=${order.id}">View Details</a></td>
+                                <td><a href="${pageContext.request.contextPath}/Orders?orderId=${order.id}">View Details</a></td>
                             </tr>
                         </c:forEach>
                         </tbody>

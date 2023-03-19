@@ -7,7 +7,7 @@
             <div class="card p-3 m-2">
                 <h1>Registration</h1>
                 <hr>
-                <form action="/Registration" method="post">
+                <form action="${pageContext.request.contextPath}/Registration" method="post">
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
                         <input type="text" class="form-control" id="username" aria-describedby="emailHelp"

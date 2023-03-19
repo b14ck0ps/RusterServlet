@@ -9,7 +9,7 @@
             <div class="card p-3 m-2">
                 <h1>Add New Product</h1>
                 <hr>
-                <form action="/AddProduct" method="post">
+                <form action="${pageContext.request.contextPath}/AddProduct" method="post">
                     <div class="mb-3">
                         <label for="ProductName" class="form-label">Product Name</label>
                         <input type="text" class="form-control" id="ProductName" aria-describedby="emailHelp"

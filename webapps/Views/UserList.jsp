@@ -2,7 +2,6 @@
 <%@include file="Header.jsp" %>
 <%@include file="AdminNavBar.jsp" %>
 <%@ page isELIgnored="false" %>
-<%@ page import="java.sql.ResultSet" %>
 <c:set var="products" value="${requestScope.usersList}"/>
 <main>
     <div class="container">

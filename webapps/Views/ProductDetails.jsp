@@ -10,7 +10,7 @@
             <div class="card p-3 m-2">
                 <h1>Products Details</h1>
                 <img class="w-50 m-auto" src="${product.image}" alt="${product.name}">
-                <form action="/ProductDetails" method="post">
+                <form action="${pageContext.request.contextPath}/ProductDetails" method="post">
                     <div class="mb-3">
                         <label for="ProductName" class="form-label">Product Name</label>
                         <input type="text" class="form-control" id="ProductName" aria-describedby="emailHelp"
@@ -49,9 +49,9 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <button type="submit" class="btn btn-primary">Update Product</button>
-                            <a href="/Admin" class="btn btn-secondary">Cancel</a>
+                            <a href="${pageContext.request.contextPath}/Admin" class="btn btn-secondary">Cancel</a>
                         </div>
-                        <a href="/Admin?delete=${requestScope.id}" class="btn btn-danger ml-auto">Delete</a>
+                        <a href="${pageContext.request.contextPath}/Admin?delete=${requestScope.id}" class="btn btn-danger ml-auto">Delete</a>
                     </div>
                 </form>
             </div>

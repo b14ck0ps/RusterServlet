@@ -15,7 +15,7 @@
                 <h1>Edit Profile</h1>
                 <span class="text-danger">${requestScope.error}</span>
                 <hr>
-                <form action="/Profile" method="post">
+                <form action="${pageContext.request.contextPath}/Profile" method="post">
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
                         <input type="text" class="form-control" id="username" aria-describedby="emailHelp"
@@ -36,7 +36,7 @@
                     </div>
                     <div class="d-flex justify-content-between">
                         <button type="submit" class="btn btn-primary">Update</button>
-                        <a href="/Profile" class="btn btn-secondary">Cancel</a>
+                        <a href="${pageContext.request.contextPath}/Profile" class="btn btn-secondary">Cancel</a>
                     </div>
                 </form>
             </div>

@@ -35,7 +35,7 @@
                         </tr>
                         </tbody>
                     </table>
-                    <a href="/Orders">Back</a>
+                    <a href="${pageContext.request.contextPath}/Orders">Back</a>
                 </div>
             </div>
         </div>
