@@ -63,13 +63,54 @@
         <filter-name>AdminFilter</filter-name>
         <filter-class>Filter.AdminFilter</filter-class>
     </filter>
+    <filter>
+        <filter-name>GuestFilter</filter-name>
+        <filter-class>Filter.GuestFilter</filter-class>
+    </filter>
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
         <servlet-name>Home</servlet-name>
     </filter-mapping>
     <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <servlet-name>Cart</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <servlet-name>Profile</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <servlet-name>Orders</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <servlet-name>Logout</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <servlet-name>ProductDetails</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
         <filter-name>AdminFilter</filter-name>
         <servlet-name>AdminDashboard</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <servlet-name>UserList</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <servlet-name>AddProduct</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>GuestFilter</filter-name>
+        <url-pattern>/Login</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>GuestFilter</filter-name>
+        <url-pattern>/Registration</url-pattern>
     </filter-mapping>
 
     <!--    SERVLET MAPPING     -->
@@ -121,7 +162,7 @@
         <servlet-name>MainServlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-
+    <!--RESOURCE REF-->
     <resource-ref>
         <res-ref-name>jdbc/rustershop</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
