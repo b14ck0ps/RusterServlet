@@ -6,11 +6,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import static DBservices.ProductRepository.deleteProduct;
 import static DBservices.ProductRepository.getAllProducts;
 
 public class Admin extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(Admin.class.getName());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -23,7 +25,9 @@ public class Admin extends HttpServlet {
             return;
         }
         var productsList = getAllProducts();
+        logger.info("User " + req.getSession().getAttribute("user") + " is viewing the admin dashboard");
         req.setAttribute("products", productsList);
+
         req.getRequestDispatcher("/Views/AdminDashBoard.jsp").forward(req, resp);
     }
 

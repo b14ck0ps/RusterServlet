@@ -4,12 +4,14 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class AuthFilter implements Filter {
+    private static final Logger logger = Logger.getLogger(AuthFilter.class.getName());
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        System.out.println("Log Filter Initialization");
+        logger.info("Auth Filter Initialization");
     }
 
     @Override
@@ -25,6 +27,6 @@ public class AuthFilter implements Filter {
 
     @Override
     public void destroy() {
-        System.out.println("Log Filter Destruction");
+        logger.info("Auth Filter Destruction");
     }
 }

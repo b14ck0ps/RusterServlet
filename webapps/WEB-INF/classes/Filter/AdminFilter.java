@@ -1,15 +1,18 @@
 package Filter;
 
+import Controllers.Admin;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class AdminFilter implements Filter {
+    private static final Logger logger = Logger.getLogger(AdminFilter.class.getName());
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        System.out.println("Log Filter Initialization");
+        logger.info("Admin Filter Initialization");
     }
 
     @Override
@@ -25,6 +28,6 @@ public class AdminFilter implements Filter {
 
     @Override
     public void destroy() {
-        System.out.println("Log Filter Destruction");
+        logger.info("Admin Filter Destruction");
     }
 }

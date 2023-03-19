@@ -8,14 +8,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import static DBservices.UserRepository.RegisterUser;
 
 public class Registration extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(Registration.class.getName());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
+        logger.info("User is viewing the registration page");
         req.getRequestDispatcher("/Views/Registration.jsp").forward(req, resp);
     }
 
@@ -49,7 +52,10 @@ public class Registration extends HttpServlet {
             setValidationError(req, username, password, email, "Password is not valid", "password");
             isFormValid = false;
         }
-        if (isValid(req, resp, isFormValid)) return;
+        if (isValid(req, resp, isFormValid)) {
+            logger.warning("User " + username + " tried to register with an invalid email or password");
+            return;
+        }
         // Checking if fields are unique
         if (Validation.DatabaseValidation.usernameExists(username)) {
             setValidationError(req, username, password, email, "Username already exists", "username");
@@ -59,13 +65,18 @@ public class Registration extends HttpServlet {
             setValidationError(req, username, password, email, "Email already exists", "email");
             isFormValid = false;
         }
-        if (isValid(req, resp, isFormValid)) return;
+        if (isValid(req, resp, isFormValid)) {
+            logger.warning("User " + username + " tried to register with an existing username or email");
+            return;
+        }
         // Registering user
         UserType Type = userType == null || userType.equals("Customer") ? UserType.CUSTOMER : UserType.ADMIN;
         var user = new Models.User(username, password, email, Type);
         if (RegisterUser(user) == 1) {
+            logger.info("User " + username + " has been registered");
             req.getRequestDispatcher("/Views/Login.jsp").forward(req, resp);
         } else {
+            logger.severe("User " + username + " has not been registered");
             req.getRequestDispatcher("/Views/Registration.jsp").forward(req, resp);
         }
     }

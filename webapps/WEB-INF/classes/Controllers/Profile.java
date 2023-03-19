@@ -1,6 +1,5 @@
 package Controllers;
 
-import DBservices.DatabasesConnection;
 import Models.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -8,11 +7,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import static DBservices.UserRepository.getUserByUsername;
 import static DBservices.UserRepository.updateUser;
 
 public class Profile extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(Profile.class.getName());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -20,8 +21,10 @@ public class Profile extends HttpServlet {
         var user = getUserByUsername((String) req.getSession().getAttribute("user"));
         req.setAttribute("user", user);
         if (req.getParameter("edit") != null) {
+            logger.info("User " + user.getUsername() + " is editing his profile");
             req.getRequestDispatcher("/Views/ProfileEdit.jsp").forward(req, resp);
         }
+        logger.info("User " + user.getUsername() + " is viewing his profile");
         req.getRequestDispatcher("/Views/Profile.jsp").forward(req, resp);
     }
 
@@ -62,7 +65,10 @@ public class Profile extends HttpServlet {
             setValidationError(req, username, email, "Email already exists", "email");
             isFormValid = false;
         }
-        if (isValid(req, resp, isFormValid)) return;
+        if (isValid(req, resp, isFormValid)) {
+            logger.warning("User " + user.getUsername() + " tried to edit his profile with invalid data");
+            return;
+        }
 
         if (password == null || password.isEmpty()) {
             password = getUserByUsername((String) req.getSession().getAttribute("user")).getPassword();
@@ -70,6 +76,7 @@ public class Profile extends HttpServlet {
             if (!Validation.FormValidation.passwordIsValid(password)) {
                 setValidationError(req, username, email, "Password is not valid", "password");
                 isFormValid = false;
+                logger.warning("User " + user.getUsername() + " tried to edit his profile with invalid Password");
             }
         }
         //update
@@ -79,8 +86,10 @@ public class Profile extends HttpServlet {
         if (updateUser(user) == 1) {
             req.getSession().setAttribute("user", username);
             req.getSession().setAttribute("userType", userType.toString());
+            logger.info("User " + user.getUsername() + " edited his profile");
             resp.sendRedirect("/Profile");
         } else {
+            logger.severe("Something went wrong while updating user " + user.getUsername());
             req.setAttribute("error", "Something went wrong");
             req.getRequestDispatcher("/Views/ProfileEdit.jsp").forward(req, resp);
         }
@@ -104,6 +113,7 @@ public class Profile extends HttpServlet {
 
     private static boolean isValid(HttpServletRequest req, HttpServletResponse resp, boolean isFormValid) throws ServletException, IOException {
         if (!isFormValid) {
+            logger.warning("User " + getUserByUsername((String) req.getSession().getAttribute("user")).getUsername() + " tried to edit his profile with invalid data");
             req.getRequestDispatcher("/Views/ProfileEdit.jsp").forward(req, resp);
             return true;
         }

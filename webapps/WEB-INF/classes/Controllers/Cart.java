@@ -11,12 +11,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Logger;
 
 import static DBservices.OrderRepository.*;
 import static DBservices.ProductRepository.getProductById;
 import static DBservices.UserRepository.getUserByUsername;
 
 public class Cart extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(Cart.class.getName());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -25,6 +27,7 @@ public class Cart extends HttpServlet {
         if (action != null && action.equals("add")) {
             try {
                 AddToCart(req, resp);
+                logger.info("User " + req.getSession().getAttribute("user") + " added a product to cart");
                 req.getSession().setAttribute("cartMessage", "Product added to cart successfully");
                 //check if param single is true
                 var single = req.getParameter("single");
@@ -35,37 +38,46 @@ public class Cart extends HttpServlet {
                 }
                 return;
             } catch (SQLException e) {
+                logger.severe("Error adding product to cart: " + e.getMessage());
                 throw new RuntimeException(e);
             }
         }
         if (action != null && action.equals("delete")) {
             try {
                 DeleteFromCart(req, resp);
+                logger.info("User " + req.getSession().getAttribute("user") + " deleted a product from cart");
             } catch (SQLException e) {
+                logger.severe("Error deleting product from cart: " + e.getMessage());
                 throw new RuntimeException(e);
             }
         }
         if (action != null && action.equals("deleteSingle")) {
             try {
                 DeleteSingleProductFromCart(req, resp);
+                logger.info("User " + req.getSession().getAttribute("user") + " deleted a product from cart");
             } catch (SQLException e) {
+                logger.severe("Error deleting product from cart: " + e.getMessage());
                 throw new RuntimeException(e);
             }
         }
         if (action != null && action.equals("clear")) {
             try {
                 clearCart(req, resp);
+                logger.info("User " + req.getSession().getAttribute("user") + " cleared cart");
             } catch (SQLException e) {
+                logger.severe("Error clearing cart: " + e.getMessage());
                 throw new RuntimeException(e);
             }
         }
         if (action != null && action.equals("checkout")) {
             try {
                 checkout(req, resp);
+                logger.info("User " + req.getSession().getAttribute("user") + " checked out");
                 req.getSession().setAttribute("OrderMessage", "Order placed successfully");
                 resp.sendRedirect("/Orders");
                 return;
             } catch (SQLException e) {
+                logger.severe("Error checking out: " + e.getMessage());
                 throw new RuntimeException(e);
             }
         }
@@ -82,6 +94,7 @@ public class Cart extends HttpServlet {
             req.getSession().setAttribute("cartProducts", cartProducts);
         }
         req.getSession().setAttribute("totalPrice", totalPrice);
+        logger.info("User " + req.getSession().getAttribute("user") + " is viewing the cart page");
         req.getRequestDispatcher("/Views/Cart.jsp").forward(req, resp);
     }
 
