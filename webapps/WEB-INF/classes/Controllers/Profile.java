@@ -87,7 +87,7 @@ public class Profile extends HttpServlet {
             req.getSession().setAttribute("user", username);
             req.getSession().setAttribute("userType", userType.toString());
             logger.info("User " + user.getUsername() + " edited his profile");
-            resp.sendRedirect("/Profile");
+            resp.sendRedirect(req.getContextPath() + "/Profile");
         } else {
             logger.severe("Something went wrong while updating user " + user.getUsername());
             req.setAttribute("error", "Something went wrong");

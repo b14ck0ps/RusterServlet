@@ -21,7 +21,7 @@ public class Admin extends HttpServlet {
         if (delete != null) {
             var id = Integer.parseInt(delete);
             deleteProduct(id);
-            resp.sendRedirect("Admin");
+            resp.sendRedirect(req.getContextPath() + "/Admin");
             return;
         }
         var productsList = getAllProducts();

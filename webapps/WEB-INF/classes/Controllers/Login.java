@@ -46,10 +46,10 @@ public class Login extends HttpServlet {
             req.getSession().setAttribute("userType", userType.toString());
             if (userType == UserType.ADMIN) {
                 logger.info("User " + username + " is an admin");
-                resp.sendRedirect("Admin");
+                resp.sendRedirect(req.getContextPath() + "/Admin");
             } else {
                 logger.info("User " + username + " is a regular user");
-                resp.sendRedirect("Home");
+                resp.sendRedirect(req.getContextPath() + "/Home");
             }
         }
     }

@@ -50,6 +50,10 @@
         <servlet-name>Logout</servlet-name>
         <servlet-class>Controllers.Logout</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MainServlet</servlet-name>
+        <servlet-class>MainServlet</servlet-class>
+    </servlet>
     <!--    FILTERS     -->
     <filter>
         <filter-name>AuthFilter</filter-name>
@@ -71,7 +75,7 @@
     <!--    SERVLET MAPPING     -->
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/Home</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Registration</servlet-name>
@@ -112,6 +116,10 @@
     <servlet-mapping>
         <servlet-name>ProductDetails</servlet-name>
         <url-pattern>/ProductDetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MainServlet</servlet-name>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <resource-ref>

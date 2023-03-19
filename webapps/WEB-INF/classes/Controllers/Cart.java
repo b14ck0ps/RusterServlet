@@ -32,9 +32,9 @@ public class Cart extends HttpServlet {
                 //check if param single is true
                 var single = req.getParameter("single");
                 if (single != null && single.equals("true")) {
-                    resp.sendRedirect("/Cart");
+                    resp.sendRedirect(req.getContextPath() + "/Cart");
                 } else {
-                    resp.sendRedirect("/Home");
+                    resp.sendRedirect(req.getContextPath() + "/Home");
                 }
                 return;
             } catch (SQLException e) {
@@ -74,7 +74,7 @@ public class Cart extends HttpServlet {
                 checkout(req, resp);
                 logger.info("User " + req.getSession().getAttribute("user") + " checked out");
                 req.getSession().setAttribute("OrderMessage", "Order placed successfully");
-                resp.sendRedirect("/Orders");
+                resp.sendRedirect(req.getContextPath() + "/Orders");
                 return;
             } catch (SQLException e) {
                 logger.severe("Error checking out: " + e.getMessage());

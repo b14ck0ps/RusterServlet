@@ -35,10 +35,10 @@ public class AddProduct extends HttpServlet {
         var status = InsertProduct(product);
         if (status == 1) {
             logger.info("User " + req.getSession().getAttribute("user") + " added product " + productName);
-            resp.sendRedirect("Admin");
+            resp.sendRedirect(req.getContextPath() + "/Admin");
         } else {
             logger.severe("User " + req.getSession().getAttribute("user") + " failed to add product " + productName);
-            resp.sendRedirect("AddProduct");
+            resp.sendRedirect(req.getContextPath() + "/AddProduct");
         }
     }
 }

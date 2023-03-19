@@ -40,15 +40,15 @@ public class ProductDetails extends HttpServlet {
         var price = Double.parseDouble(req.getParameter("Price"));
         var image = req.getParameter("image");
 
-       //update product
+        //update product
         var product = new Models.Product(productName, categoryId, quantity, price, image);
         var status = updateProduct(id, product);
         if (status == 1) {
             logger.info("User " + req.getSession().getAttribute("user") + " updated product " + productName);
-            resp.sendRedirect("Admin");
+            resp.sendRedirect(req.getContextPath() + "/Admin");
         } else {
             logger.info("User " + req.getSession().getAttribute("user") + " failed to update product " + productName);
-            resp.sendRedirect("ProductDetails?id=" + id);
+            resp.sendRedirect(req.getContextPath() + "/ProductDetails?id=" + id);
         }
 
     }
